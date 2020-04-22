@@ -25,7 +25,7 @@ def gauss(a: List[List[TNum]], b: List[List[TNum]], eps: float = 1.0 / (10 ** 10
     a = copy.deepcopy(a)
     b = copy.deepcopy(b)
     n, m = len(a), len(a[0])
-    assert n >= m, "Solution is not possible if number of rows < number of colums. A:{}".format(a)
+    assert n >= m, "Solution is not possible if number of rows < number of columns. A:{}".format(a)
     n = min(n, m)
     p = len(b[0])
 
@@ -87,7 +87,7 @@ def filled_matrix(p: int, q: int, fill_val=0) -> List[List]:
     :param fill_val: every element of matrix is going to be equal fill_val
     :return: matrix of size p x q 
     """
-    return [[fill_val] * q for i in range(p)]
+    return [[fill_val] * q for _ in range(p)]
 
 
 def matmul(a: List[List], b: List[List]) -> List[List]:

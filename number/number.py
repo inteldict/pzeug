@@ -1,3 +1,8 @@
+"""
+A module with auxiliary functions for working with all around numbers
+
+"""
+
 import itertools
 from collections import deque
 
@@ -18,11 +23,11 @@ def digits_to_number(digits):
 def combinations(n):
     for digits in set(itertools.permutations(digits_in_number(n))):
         degree = len(digits) - 1
-        sum = 0
+        digit_sum = 0
         for digit in digits:
-            sum += digit * 10 ** degree
+            digit_sum += digit * 10 ** degree
             degree -= 1
-        yield sum
+        yield digit_sum
 
 
 def circulars(digits):
@@ -31,47 +36,33 @@ def circulars(digits):
     for i in range(1, length):
         digits.rotate(1)
         degree = 0
-        sum = 0
+        digit_sum = 0
         for digit in digits:
-            sum += digit * 10 ** degree
+            digit_sum += digit * 10 ** degree
             degree += 1
-        yield sum
+        yield digit_sum
 
 
-def fibonacci():
-    a = 1
-    b = 1
-    yield a
-    yield b
-    while True:
-        b = a + b
-        a = b - a
-        yield b
-
-
-# def lambda(n):
-#     if  # 10 is prmitive rooot modulo p:
-#         return n-1
-def prim_root(n):
-    totient = tot(n)
-    roots = []
-    exp = len(totient)
-    for x in totient:
-        y = 1
-        while pow(x, y, n) != 1:
-            y += 1
-        if y == exp:
-            roots.append(x)
-    return roots
-
-
-def colliatz_len(n, prev_len=0):
-    if n == 1:
-        return prev_len + 1
-    if n in len_hash:
-        return prev_len + len_hash[n]
-
-    return colliatz_len(n // 2 if n % 2 == 0 else 3 * n + 1, prev_len + 1)
+# def prim_root(n):
+#     totient = tot(n)
+#     roots = []
+#     exp = len(totient)
+#     for x in totient:
+#         y = 1
+#         while pow(x, y, n) != 1:
+#             y += 1
+#         if y == exp:
+#             roots.append(x)
+#     return roots
+#
+#
+# def colliatz_len(n, prev_len=0):
+#     if n == 1:
+#         return prev_len + 1
+#     if n in len_hash:
+#         return prev_len + len_hash[n]
+#
+#     return colliatz_len(n // 2 if n % 2 == 0 else 3 * n + 1, prev_len + 1)
 
 
 def colliatz_sequence(n):

@@ -1,4 +1,6 @@
-import math
+"""
+Set of functions for performing operations on numbers
+"""
 
 
 def exact_sqrt(x):
@@ -12,36 +14,60 @@ def exact_sqrt(x):
     http://mathforum.org/library/drmath/view/52656.html
     """
 
-    N = 0   # Problem so far
-    a = 0   # Solution so far
+    N = 0  # Problem so far
+    a = 0  # Solution so far
 
     # We'll process the number two bits at a time, starting at the MSB
     L = x.bit_length()
-    L += (L % 2)          # Round up to the next even number
+    L += (L % 2)  # Round up to the next even number
 
     for i in range(L, -1, -1):
 
         # Get the next group of two bits
-        n = (x >> (2*i)) & 0b11
+        n = (x >> (2 * i)) & 0b11
 
         # Check whether we can reduce the remainder
-        if ((N - a*a) << 2) + n >= (a<<2) + 1:
+        if ((N - a * a) << 2) + n >= (a << 2) + 1:
             b = 1
         else:
             b = 0
 
-        a = (a << 1) | b   # Concatenate the next bit of the solution
-        N = (N << 2) | n   # Concatenate the next bit of the problem
+        a = (a << 1) | b  # Concatenate the next bit of the solution
+        N = (N << 2) | n  # Concatenate the next bit of the problem
 
-    return a, N-a*a
+    return a, N - a * a
 
 
 def factorial(n):
-    factorials = [math.factorial(n) for n in range(10)]
-    cached = factorials.get(n, 0)
-    if cached:
-        return cached
-    else:
-        result = n * factorial(n-1)
-        factorials[n] = result
+    """Factorial of n.
+
+    :param n:
+    :return:
+    """
+    # if not hasattr(factorial, "factorials_cache"):
+    try:
+        if n < len(factorial.factorials_cache):
+            return factorial.factorials_cache[n]
+    except AttributeError:
+        factorial.factorials_cache = [1, 1]
+    result = n * factorial(n - 1)
+    factorial.factorials_cache.append(result)
     return result
+
+
+if __name__ == "__main__":
+    import doctest
+    from timeit import default_timer
+
+    doctest.testmod()
+    start_time = default_timer()
+
+    print(factorial(5))
+    print(factorial(6))
+    print(factorial(9))
+    print(factorial(999))
+    print(factorial(9999))
+    # print(factorial(9999999))
+
+    end_time = default_timer()
+    print("Execution time: {:.3f}s".format(end_time - start_time))
