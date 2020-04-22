@@ -10,6 +10,8 @@ def exact_sqrt(x):
     a is the largest integer such that a**2 <= x, and r is the "remainder".  If
     x is a perfect square, then r will be zero.
 
+    Around two orders slower than math.sqrt!
+
     The algorithm used is the "long-hand square root" algorithm, as described at
     http://mathforum.org/library/drmath/view/52656.html
     """
@@ -39,20 +41,37 @@ def exact_sqrt(x):
 
 
 def factorial(n):
-    """Factorial of n.
+    """Factorial of n without memoization. Can be used for calculation for very large numbers
 
-    :param n:
+    :param n (int): number to calculate for
     :return:
+        n * (n-1) * (n-2) * ... * 1
     """
-    # if not hasattr(factorial, "factorials_cache"):
-    try:
-        if n < len(factorial.factorials_cache):
-            return factorial.factorials_cache[n]
-    except AttributeError:
-        factorial.factorials_cache = [1, 1]
-    result = n * factorial(n - 1)
-    factorial.factorials_cache.append(result)
+    result = 1
+    for i in range(2, n + 1):
+        result *= i
     return result
+
+
+def cached_factorial(n: int) -> int:
+    """Factorial of n, uses memoization of all previously calculated results. Useful if you need
+    a lot of calculations for not so large numbers.
+
+    :param n (int): number to calculate for
+    :return:
+        n * (n-1) * (n-2) * ... * 1
+    """
+    try:
+        if n < len(cached_factorial.cache):
+            return cached_factorial.cache[n]
+    except AttributeError:
+        cached_factorial.cache = [1, 1]
+    cache_size = len(cached_factorial.cache)
+    largest_in_cache = cached_factorial.cache[cache_size - 1]
+    for i in range(cache_size, n + 1):
+        largest_in_cache *= i
+        cached_factorial.cache.append(largest_in_cache)
+    return largest_in_cache
 
 
 if __name__ == "__main__":
@@ -61,13 +80,28 @@ if __name__ == "__main__":
 
     doctest.testmod()
     start_time = default_timer()
+    # assert math.factorial(large_number) == factorial(large_number)
+    import math
 
-    print(factorial(5))
-    print(factorial(6))
-    print(factorial(9))
-    print(factorial(999))
-    print(factorial(9999))
-    # print(factorial(9999999))
+    # for i in range(0, 1000):
+    #     gold_standard = math.factorial(i)
+    #     assert gold_standard == cached_factorial(i) == factorial(i)
+    #
+    # large_number = 9999
+    # assert math.factorial(large_number) == factorial(large_number)
+    #
+    # end_time = default_timer()
+    # print("Execution time: {:.3f}s".format(end_time - start_time))
+    very_large_number = 99999999999999
 
-    end_time = default_timer()
-    print("Execution time: {:.3f}s".format(end_time - start_time))
+    second_run = default_timer()
+    for i in range(1000):
+        int(math.sqrt(very_large_number))
+    end_second_run = default_timer()
+    print("Execution time, math.sqrt: {:.3f}s".format(end_second_run - second_run))
+
+    first_run = default_timer()
+    for i in range(1000):
+        exact_sqrt(very_large_number)
+    end_first_run = default_timer()  #
+    print("Execution time, exact_sqrt: {:.3f}s".format(end_first_run - first_run))
