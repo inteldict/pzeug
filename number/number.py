@@ -71,10 +71,38 @@ def colliatz_sequence(n):
         yield from colliatz_sequence(n // 2 if n % 2 == 0 else 3 * n + 1)
 
 
-if __name__ == "__main__":
-    # baz.py
-    import inspect
-    import sys
+def gcd(a: int, b: int) -> int:
+    """Calculate the Greatest Common Divisor of a and b.
 
-    current_module = sys.modules[__name__]
-    print(inspect.getsource(current_module))
+    Unless b==0, the result will have the same sign as b (so that when
+    b is divided by it, the result comes out positive).
+    """
+    while b:
+        a, b = b, a % b
+    return a
+
+
+def lcm(a: int, b: int) -> int:
+    """Calculate Least Common Multiple using Greatest Common Divisor function.
+
+    Examples:
+      >>> lcm(12,20)
+      60
+    """
+    return a * b // gcd(a, b)
+
+
+if __name__ == "__main__":
+    import doctest
+
+    doctest.testmod()
+
+    # import inspect
+    # import sys
+    # current_module = sys.modules[__name__]
+    # print(inspect.getsource(current_module))
+    import fractions
+
+    print(gcd(27, 54))
+    print(lcm(3, 7))
+    print(fractions.Fraction(27, 54) / gcd(27, 54))
