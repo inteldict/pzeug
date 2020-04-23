@@ -9,7 +9,7 @@ Many helper functions that rely on the standard Python 3 library only. This set 
 - number/prime.py
 - number/sequence.py
 - matrix.py
-- calendar/calendar.py
+- time.py
 
 ## Test coverage is provided by unittests and doctests:
 
