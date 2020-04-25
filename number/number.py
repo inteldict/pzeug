@@ -7,6 +7,18 @@ import itertools
 from collections import deque
 
 
+def reverse(n):
+    reversed_n = 0
+    while n > 0:
+        reversed_n = 10 * reversed_n + (n % 10)
+        n //= 10
+    return reversed_n
+
+
+def is_palindrome(number):
+    return number == reverse(number)
+
+
 def digits_in_number(number):
     while number:
         yield number % 10
@@ -90,6 +102,41 @@ def lcm(a: int, b: int) -> int:
       60
     """
     return a * b // gcd(a, b)
+
+
+def largest_palindrome(min_factor, max_factor):
+    """Find largest palindrome given range of factors [min_factor, max_factor]
+
+    Consider the digits of P – let them be x, y and z.
+    P must be at least 6 digits long since the palindrome 111111 = 143×777 – the product of two 3-digit integers.
+    Since P is palindromic:
+        P=100000x10000y1000z100z10yx
+        P=100001x10010y1100z
+        P=119091x910y100z
+    Since 11 is prime, at least one of the integers a or b must have a factor of 11.
+    So if a is not divisible by 11 then we know b must be. Using this information
+    we can determine what values of b we check depending on a.
+    """
+
+    max_palindrome = 0
+    max_a = 0
+    max_b = 0
+    for a in range(max_factor, min_factor - 1, -1):
+        if a % 11 == 0:
+            b = max_factor
+            b_step = -1
+        else:
+            b = max_factor - max_factor % 11
+            b_step = -11
+        for k in range(b, a - 1, b_step):
+            multiplication = a * k
+            if multiplication <= max_palindrome:
+                break
+            if is_palindrome(multiplication):
+                max_palindrome = a * k
+                max_a = a
+                max_b = k
+    return max_palindrome, max_a, max_b
 
 
 if __name__ == "__main__":

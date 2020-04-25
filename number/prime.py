@@ -184,6 +184,17 @@ def proper_divisors(n):
     return divisors
 
 
+def factorize(number, prime_numbers_generator):
+    for prime in prime_numbers_generator:
+        if number % prime == 0:
+            yield prime
+            if number != prime:
+                yield from factorize(number // prime, prime_numbers_generator)
+            break
+    else:
+        return number
+
+
 if __name__ == "__main__":
     # print(sieve_of_factors(100))
     # print(sieve_of_factors2(100))
