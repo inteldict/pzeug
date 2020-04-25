@@ -7,19 +7,31 @@ import math
 from functools import reduce
 
 
-def sieve_of_eratosthenes(limit):
-    uneven_limit = math.ceil(limit / 2) - 1
-    a = [True] * uneven_limit  # Initialize the primality list
-    yield 2
-    i = 3
-    cross_limit = int(math.sqrt(limit))
-    for is_prime_number in a:
-        if is_prime_number:
-            yield i
-            if i <= cross_limit:
-                for n in range(i * i // 2 - 1, uneven_limit, i):  # Mark factors non-prime
-                    a[n] = False
-        i += 2
+# def sieve_of_eratosthenes(limit):
+#     uneven_limit = math.ceil(limit / 2) - 1
+#     a = [True] * uneven_limit  # Initialize the primality list
+#     yield 2
+#     i = 3
+#     cross_limit = int(math.sqrt(limit))
+#     for is_prime_number in a:
+#         if is_prime_number:
+#             yield i
+#             if i <= cross_limit:
+#                 for n in range(i * i // 2 - 1, uneven_limit, i):  # Mark factors non-prime
+#                     a[n] = False
+#         i += 2
+
+
+def lazy_sieve_of_eratosthenes(iter):
+    next_prime = next(iter)
+    yield next_prime
+    sq_prime = next_prime ** 2
+    for prime in iter:
+        if prime < sq_prime:
+            yield prime
+        else:
+            break
+    yield from lazy_sieve_of_eratosthenes(x for x in iter if x % next_prime != 0)
 
 
 def sieve_of_factors(limit):
@@ -176,6 +188,6 @@ if __name__ == "__main__":
     # print(sieve_of_factors(100))
     # print(sieve_of_factors2(100))
     # print(all_factors(999,2))
-    all_primes = sieve_of_eratosthenes(999)
+    all_primes = lazy_sieve_of_eratosthenes(999)
     print(tuple(all_primes))
     # print(tuple(find_prime_factors(999, all_primes)))
