@@ -4,7 +4,10 @@ A module with auxiliary functions for working with all around numbers
 """
 
 import itertools
+import math
 from collections import deque
+
+from pzeug.number.prime import sieve_of_eratosthenes
 
 
 def reverse(n):
@@ -137,6 +140,19 @@ def largest_palindrome(min_factor, max_factor):
                 max_a = a
                 max_b = k
     return max_palindrome, max_a, max_b
+
+    def smallest_num_divisible_by_each_to(k):
+        """Calculate smallest number that can be divided by each of the numbers from 1 to k without any remainder.
+        """
+        check_limit = int(math.sqrt(k))
+        result = 1
+        for prime in sieve_of_eratosthenes(k):
+            if prime > check_limit:
+                result *= prime
+            else:
+                degree = int(math.log10(k) / math.log10(prime))
+                result *= (prime ** degree)
+        return result
 
 
 if __name__ == "__main__":

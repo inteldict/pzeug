@@ -32,7 +32,7 @@ def is_leap(year):
     return False
 
 
-def timing(f):
+def execution_time(f):
     """Decorator for measuring execution time of a function
 
     Examples:
@@ -53,7 +53,7 @@ def timing(f):
 
 
 if __name__ == "__main__":
-    @timing
+    @execution_time
     def custom_sum(a, b):
         return a + b
 

@@ -21,17 +21,30 @@ from functools import reduce
 #                     a[n] = False
 #         i += 2
 
+def sieve_of_eratosthenes(limit):
+    """Generate prime numbers in range [2,limit]
 
-def lazy_sieve_of_eratosthenes(iter):
-    next_prime = next(iter)
-    yield next_prime
-    sq_prime = next_prime ** 2
-    for prime in iter:
-        if prime < sq_prime:
-            yield prime
-        else:
-            break
-    yield from lazy_sieve_of_eratosthenes(x for x in iter if x % next_prime != 0)
+    Args:
+        limit: max value up to look for prime numbers
+
+    Returns:
+        generator of prime numbers
+    """
+    yield 2
+    sieve_iterator = iter(range(3, limit, 2))
+
+    def lazy_sieve_of_eratosthenes(sieve_iterator):
+        next_prime = next(sieve_iterator)
+        yield next_prime
+        sq_prime = next_prime ** 2
+        for prime in sieve_iterator:
+            if prime < sq_prime:
+                yield prime
+            else:
+                break
+        yield from lazy_sieve_of_eratosthenes(x for x in sieve_iterator if x % next_prime != 0)
+
+    yield from lazy_sieve_of_eratosthenes(sieve_iterator)
 
 
 def sieve_of_factors(limit):
@@ -199,6 +212,10 @@ if __name__ == "__main__":
     # print(sieve_of_factors(100))
     # print(sieve_of_factors2(100))
     # print(all_factors(999,2))
-    all_primes = lazy_sieve_of_eratosthenes(999)
-    print(tuple(all_primes))
+    # all_primes = lazy_sieve_of_eratosthenes(999)
+    # print(tuple(all_primes))
     # print(tuple(find_prime_factors(999, all_primes)))
+    prime_iter = sieve_of_eratosthenes(20)
+    print(prime_iter)
+    for _ in range(100):
+        print(next(prime_iter))
