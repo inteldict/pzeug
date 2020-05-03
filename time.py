@@ -46,7 +46,7 @@ def execution_time(f):
         start = timeit.default_timer()
         result = f(*args, **kwargs)
         end = timeit.default_timer()
-        print(f"'{f.__name__}' execution time: {end - start:.3f}s")
+        print("'{}' execution time: {:.3f}s".format(f.__name__, end - start))
         return result
 
     return wrapper
