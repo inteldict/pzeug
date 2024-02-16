@@ -45,6 +45,36 @@ def combinations(n):
         yield digit_sum
 
 
+def binomial_coefficient(n: int, k: int) -> int:
+    """Returns n choose k, number of ways to choose an unordered subset of k elements
+     from a fixed set of n elements.
+
+    Args:
+        n: n elements
+        k: k elements to choose
+    """
+
+    if k > n:
+        raise ValueError("The following must be True: n >= k. Supplied n={}, k={}.".format(n, k))
+
+    try:
+        if (n, k) in binomial_coefficient.cache:
+            return binomial_coefficient.cache[(n, k)]
+    except AttributeError:
+        binomial_coefficient.cache = {}
+
+    def _binomial_coefficient(n: int, k: int) -> int:
+        if k == 0 or n == k:
+            return 1
+        elif (n, k) in binomial_coefficient.cache:
+            return binomial_coefficient.cache[(n, k)]
+        result = _binomial_coefficient(n - 1, k) + _binomial_coefficient(n - 1, k - 1)
+        binomial_coefficient.cache[(n, k)] = result
+        return result
+
+    return _binomial_coefficient(n, k)
+
+
 def circulars(digits):
     digits = deque(digits)
     length = len(digits)

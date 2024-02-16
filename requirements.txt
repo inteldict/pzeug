@@ -1,0 +1,21 @@
+aiohttp @ file:///home/conda/feedstock_root/build_artifacts/aiohttp_1649013149994/work
+aiosignal @ file:///home/conda/feedstock_root/build_artifacts/aiosignal_1667935791922/work
+async-timeout @ file:///home/conda/feedstock_root/build_artifacts/async-timeout_1640026696943/work
+attrs @ file:///home/conda/feedstock_root/build_artifacts/attrs_1671632566681/work
+brotlipy==0.7.0
+certifi @ file:///croot/certifi_1707229174982/work/certifi
+cffi @ file:///croot/cffi_1670423208954/work
+charset-normalizer @ file:///tmp/build/80754af9/charset-normalizer_1630003229654/work
+cryptography @ file:///croot/cryptography_1665612644927/work
+et-xmlfile==1.1.0
+frozenlist @ file:///croot/frozenlist_1670004507010/work
+idna @ file:///croot/idna_1666125576474/work
+multidict @ file:///croot/multidict_1665674239670/work
+openpyxl==3.0.10
+pycparser @ file:///tmp/build/80754af9/pycparser_1636541352034/work
+pyOpenSSL @ file:///opt/conda/conda-bld/pyopenssl_1643788558760/work
+PySocks @ file:///home/builder/ci_310/pysocks_1640793678128/work
+requests @ file:///opt/conda/conda-bld/requests_1657734628632/work
+typing_extensions @ file:///home/conda/feedstock_root/build_artifacts/typing_extensions_1665144421445/work
+urllib3 @ file:///croot/urllib3_1670526988650/work
+yarl @ file:///home/conda/feedstock_root/build_artifacts/yarl_1648966516552/work
