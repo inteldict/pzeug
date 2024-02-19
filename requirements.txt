@@ -11,7 +11,7 @@ et-xmlfile==1.1.0
 frozenlist @ file:///croot/frozenlist_1670004507010/work
 idna @ file:///croot/idna_1666125576474/work
 multidict @ file:///croot/multidict_1665674239670/work
-openpyxl==3.0.10
+openpyxl==3.1.2
 pycparser @ file:///tmp/build/80754af9/pycparser_1636541352034/work
 pyOpenSSL @ file:///opt/conda/conda-bld/pyopenssl_1643788558760/work
 PySocks @ file:///home/builder/ci_310/pysocks_1640793678128/work
